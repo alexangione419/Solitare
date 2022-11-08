@@ -10,13 +10,8 @@ class Card:
         self.sprite = arcade.Sprite(f":resources:images/cards/{self.suit.name}{self.value}.png", \
             center_x = 200, center_y = 200)
 
-         
-
-        # Image to use for the sprite when face up
-        # self.image_file_name = f":resources:images/cards/{self.suit}{self.value}.png"
-        # self.texture = arcade.load_texture(self.image_file_name)
-        # Call the parent
-        # super().__init__(self.image_file_name, scale, hit_box_algorithm="None")
     
     def __str__(self) -> str:
         return f'{self.value} of {self.suit}'
+
+
