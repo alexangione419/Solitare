@@ -11,8 +11,8 @@ class Card:
          
 
         # Image to use for the sprite when face up
-        self.image_file_name = f":resources:images/cards/{self.suit}{self.value}.png"
-        self.texture = arcade.load_texture(self.image_file_name)
+        # self.image_file_name = f":resources:images/cards/{self.suit}{self.value}.png"
+        # self.texture = arcade.load_texture(self.image_file_name)
         # Call the parent
         # super().__init__(self.image_file_name, scale, hit_box_algorithm="None")
     
