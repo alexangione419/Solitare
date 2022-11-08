@@ -13,13 +13,17 @@ class Game(arcade.Window):
 
 
     def on_draw(self):
+        # sets the background of the board
         arcade.set_background_color(arcade.color.BOTTLE_GREEN)
         arcade.start_render()
 
-        cardSprite = arcade.Sprite(":resources:images/cards/cardSpadesA.png", \
-            center_x = 200, center_y = 200)
+        spades = Suit("Spades", "black")
+        ace_spades = Card("A", spades)
 
-        self.all_sprites.append(cardSprite)
+        # cardSprite = arcade.Sprite(":resources:images/cards/cardSpadesA.png", \
+        #     center_x = 200, center_y = 200)
+
+        self.all_sprites.append(ace_spades.sprite)
 
         arcade.SpriteList.draw(self.all_sprites)
 
