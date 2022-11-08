@@ -11,7 +11,6 @@ SCREEN_HEIGHT = 720
 
 # class Cardprop(arcade.sprite):
 #     pass
-
 class Game(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH,SCREEN_HEIGHT,'first attempt')
@@ -21,15 +20,18 @@ class Game(arcade.Window):
         arcade.draw_rectangle_filled(x_off, y_off, 300, 475, arcade.color.WHITE)    
         arcade.draw_arc_filled(150, 144, 85, 86,
         arcade.color.BOTTLE_GREEN, 90, 230, 20, 100)
-
-
+        Suit.new = Suit('Diamond','Red')
+        Card.new = Card(7, Suit.new)
+        
 
 def main():
-    window = Game()
     # window.setup()
-    Game.draw_card(50,60)
+    window = Game()
+    
+  
+    
+    Game.draw_card(300,300)
     arcade.run()
-
 
 if __name__ == "__main__":
     main()
