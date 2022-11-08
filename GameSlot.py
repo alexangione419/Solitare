@@ -15,10 +15,4 @@ class GameSlot():
         print(self.cards)
 
 
-spade = Suit("spade", "black")
-ace_spades = Card("Ace", spade)
-
-slot = GameSlot()
-slot.add_card(ace_spades)
-slot.display_cards()
 
