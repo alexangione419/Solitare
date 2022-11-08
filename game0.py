@@ -20,15 +20,10 @@ class Game(arcade.Window):
         spades = Suit("Spades", "black")
         ace_spades = Card("A", spades)
 
-        # cardSprite = arcade.Sprite(":resources:images/cards/cardSpadesA.png", \
-        #     center_x = 200, center_y = 200)
-
         self.all_sprites.append(ace_spades.sprite)
 
         arcade.SpriteList.draw(self.all_sprites)
 
-        # arcade.draw_rectangle_filled(500, 500, CARD_WIDTH, CARD_HEIGHT, arcade.color.JAPANESE_INDIGO)
-        # arcade.draw_arc_filled(150, 144, 85, 86, arcade.color.ALABAMA_CRIMSON, 90, 230, 20, 100)
     
 
 
