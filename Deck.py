@@ -1,6 +1,7 @@
 from Card import Card
 from Suit import Suit
 import arcade
+import random
 
 class Deck:
     def __init__(self) -> None:
@@ -15,3 +16,10 @@ class Deck:
         for s in suits:
             for v in values:
                 self.deck.append(Card(v, s))
+
+    def shuffle(self) -> None:
+        shuffled = []
+        for i in range(len(self.deck)):
+            shuffled.append(self.deck[random.randint(0, len(self.deck)-i)])
+
+        self.deck = shuffled
