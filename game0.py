@@ -18,8 +18,6 @@ class Game(arcade.Window):
         self.cardzzz = []
 
         for i in range(len(self.playableDeck.deck)):
-
-
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
 
             
