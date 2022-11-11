@@ -6,6 +6,8 @@ class Card:
     def __init__(self, value, suit : Suit) -> None:
         self.value = value
         self.suit = suit
+        self.centerx = 0
+        self.centery = 0
 
         self.image = f":resources:images/cards/card{self.suit.name}{self.value}.png"
 

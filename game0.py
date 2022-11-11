@@ -37,8 +37,12 @@ class Game(arcade.Window):
     def draw_deck(self, playableDeck):
         x_pos = 50
         y_pos = 400
-        for i in playableDeck.deck:
-            self.all_sprites.append(arcade.Sprite(i.image, center_x = x_pos, center_y = y_pos))
+        for i in range(len(self.playableDeck.deck)):
+            self.all_sprites.append(arcade.Sprite(self.playableDeck.deck[i].image, center_x = x_pos, center_y = y_pos))
+            self.playableDeck.deck[i].centerx = x_pos
+            self.playableDeck.deck[i].centery = y_pos
+
+
             x_pos += 25
 
         arcade.SpriteList.draw(self.all_sprites)
