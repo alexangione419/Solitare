@@ -19,7 +19,14 @@ class Deck:
 
     def shuffle(self) -> None:
         shuffled = []
+        old = []
+        old += self.deck
+
         for i in range(len(self.deck)):
-            shuffled.append(self.deck[random.randint(0, len(self.deck)-i)])
+            print(i)
+            print(len(old))
+            card_to_remove = random.randint(0, len(self.deck) - i)
+            shuffled.append(old[card_to_remove])
+            old.pop(card_to_remove)
 
         self.deck = shuffled
