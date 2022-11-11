@@ -17,15 +17,13 @@ class Deck:
             for v in values:
                 self.deck.append(Card(v, s))
 
+
     def shuffle(self) -> None:
         shuffled = []
         old = []
         old += self.deck
-
         for i in range(len(self.deck)):
-            print(i)
-            print(len(old))
-            card_to_remove = random.randint(0, len(self.deck) - i)
+            card_to_remove = random.randint(0, len(self.deck) - 1 - i)
             shuffled.append(old[card_to_remove])
             old.pop(card_to_remove)
 
