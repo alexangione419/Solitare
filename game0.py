@@ -29,14 +29,14 @@ class Game(arcade.Window):
         dynamic_height_rect = math.floor(SCREEN_HEIGHT/8)
         i = 0
         winslots = []
-        for x in range (300+ dynamic_width_rect,3*dynamic_width_rect, 200):
-            arcade.draw_rectangle_outline(SCREEN_WIDTH-x,SCREEN_HEIGHT-dynamic_height_rect,175,225,arcade.color.AIR_SUPERIORITY_BLUE,3)
+        # for x in range (300+ dynamic_width_rect,3*dynamic_width_rect, 200):
+        #     arcade.draw_rectangle_outline(SCREEN_WIDTH-x,SCREEN_HEIGHT-dynamic_height_rect,175,225,arcade.color.AIR_SUPERIORITY_BLUE,3)
             
         #     i +=1
         # i = 0
         # playslots = []
-        for x in range (300+ dynamic_width_rect,5*dynamic_width_rect, 175):
-            arcade.draw_rectangle_outline(SCREEN_WIDTH-x,SCREEN_HEIGHT-3*dynamic_height_rect,175,225,arcade.color.AIR_SUPERIORITY_BLUE,3)
+        # for x in range (300+ dynamic_width_rect,5*dynamic_width_rect, 175):
+        #     arcade.draw_rectangle_outline(SCREEN_WIDTH-x,SCREEN_HEIGHT-3*dynamic_height_rect,175,225,arcade.color.AIR_SUPERIORITY_BLUE,3)
         #     playslots[i] = GameSlot(SCREEN_WIDTH-x,SCREEN_HEIGHT-dynamic_height_rect)
         #     i+=1
         self.draw_deck()
