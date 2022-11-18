@@ -14,7 +14,7 @@ class Game(arcade.Window):
         self.all_sprites = arcade.SpriteList()
         self.playableDeck = Deck(500, 500)
         self.playableDeck.shuffle()
-
+        self.background = arcade.load_texture("background.png")
         for i in range(len(self.playableDeck.deck)):
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
         self.cardzzz = []
@@ -22,9 +22,11 @@ class Game(arcade.Window):
 
     def on_draw(self):
         # sets the background of the board
-        arcade.set_background_color(arcade.color.BOTTLE_GREEN)
+        # arcade.set_background_color(arcade.color.BOTTLE_GREEN)
         
         arcade.start_render()
+        arcade.draw_texture_rectangle(650, 600, 1200,
+                                      1080, self.background)
         dynamic_width_rect = math.floor(SCREEN_WIDTH/5)
         dynamic_height_rect = math.floor(SCREEN_HEIGHT/8)
         i = 0
