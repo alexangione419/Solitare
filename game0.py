@@ -13,7 +13,7 @@ class Game(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT,'Solitaire')
         self.all_sprites = arcade.SpriteList()
-        self.playableDeck = Deck(500, 500)
+        self.playableDeck = Deck()
         self.playableDeck.shuffle()
         self.background = arcade.load_texture("background.png")
 
@@ -43,12 +43,11 @@ class Game(arcade.Window):
         #     playslots[i] = GameSlot(SCREEN_WIDTH-x,SCREEN_HEIGHT-dynamic_height_rect)
         #     i+=1
 
-        self.draw_deck()
+        self.all_sprites.draw()
     
    
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         self.cardzzz = arcade.get_sprites_at_point((x, y), self.all_sprites)
-        print(x,y)
 
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
@@ -62,22 +61,8 @@ class Game(arcade.Window):
             self.cardzzz[0].center_x += dx
             self.cardzzz[0].center_y += dy
 
-                    
+                            
 
-    def draw_deck(self):
-        # deck = self.playableDeck.deck
-        # current_slot_x = 135
-        # cards_to_place = 1
-        # for i in range(0, 7):
-        #     current_slot_y = 615
-        #     for c in range(cards_to_place):
-        #         deck[0].x = current_slot_x
-        #         deck[0].y = current_slot_y
-        #         deck.remove(0)
-        #         current_slot_y += 50
-        #     cards_to_place += 1
-        
-        self.all_sprites.draw()
 
 
 def main():
