@@ -1,9 +1,9 @@
 import arcade
 from Suit import Suit
 from Card import Card
-from GameSlot import GameSlot
+from play_card_slot import playSlot
+from win_card_slot import winSlot
 from Deck import Deck
-import math
 
 
 SCREEN_WIDTH = 1898
@@ -12,14 +12,36 @@ SCREEN_HEIGHT = 1074
 class Game(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT,'Solitaire')
+        # creates the list of card sprites
         self.all_sprites = arcade.SpriteList()
+        # creates the deck of cards and __________
         self.playableDeck = Deck()
+        # shuffles around the deck of cards withouth changing overall card positions
+        
+        #### SHUFFLE ISNT WORKING FOR SOME REASON REMEMBER THATS A THING ####
         self.playableDeck.shuffle()
+
+        self.slot1 = playSlot(135, 580)
+        self.slot2 = playSlot(405, 580)
+        self.slot3 = playSlot(675, 580)
+        self.slot4 = playSlot(945, 580)
+        self.slot5 = playSlot(1215, 580)
+        self.slot6 = playSlot(1485, 580)
+        self.slot7 = playSlot(1755, 580)
+
+        # self.win_Slot_1 = 
+        # self.win_Slot_2 = 
+        # self.win_Slot_3 = 
+        # self.win_Slot_4 = 
+
+
+
         self.background = arcade.load_texture("background.png")
 
         for i in range(len(self.playableDeck.deck)):
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
-        self.cardzzz = []
+
+        self.held_card = [0, (0, 0)]
   
 
     def on_draw(self):
@@ -28,39 +50,36 @@ class Game(arcade.Window):
         
         arcade.start_render()
         arcade.draw_texture_rectangle(949, 537, 1898, 1074, self.background)
-        dynamic_width_rect = math.floor(SCREEN_WIDTH/5)
-        dynamic_height_rect = math.floor(SCREEN_HEIGHT/8)
-        i = 0
-        winslots = []
-        # for x in range (300+ dynamic_width_rect,3*dynamic_width_rect, 200):
-        #     arcade.draw_rectangle_outline(SCREEN_WIDTH-x,SCREEN_HEIGHT-dynamic_height_rect,175,225,arcade.color.AIR_SUPERIORITY_BLUE,3)
-            
-        #     i +=1
-        # i = 0
-        # playslots = []
-        # for x in range (300+ dynamic_width_rect,5*dynamic_width_rect, 175):
-        #     arcade.draw_rectangle_outline(SCREEN_WIDTH-x,SCREEN_HEIGHT-3*dynamic_height_rect,175,225,arcade.color.AIR_SUPERIORITY_BLUE,3)
-        #     playslots[i] = GameSlot(SCREEN_WIDTH-x,SCREEN_HEIGHT-dynamic_height_rect)
-        #     i+=1
 
         self.all_sprites.draw()
     
    
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
-        self.cardzzz = arcade.get_sprites_at_point((x, y), self.all_sprites)
+        ## selects the frontmost card the player clicks on
+        if len(arcade.get_sprites_at_point((x, y), self.all_sprites)) > 0:
+            self.held_card[0] = arcade.get_sprites_at_point((x, y), self.all_sprites)[::-1][0]
+            self.held_card[1] = (x, y)
 
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
-        if len(self.cardzzz):
-            self.cardzzz.pop(0)
+        
+        if(self.slot1.within(x, y)):
+            if self.slot1.add_card(self.held_card[0]):
+                self.held_card = 0
+            else:
+                self.held_card[0].center_x = self.held_card[1][0]
+                self.held_card[0].center_y = self.held_card[1][1]
+
+
+
         return super().on_mouse_release(x, y, button, modifiers)
         
 
     def on_mouse_motion(self, x: float, y: float, dx: float, dy: float):
-        if len(self.cardzzz) > 0: 
-            self.cardzzz[0].center_x += dx
-            self.cardzzz[0].center_y += dy
-
+        if self.held_card[0] != 0:
+            self.held_card[0].center_x += dx
+            self.held_card[0].center_y += dy
+ 
                             
 
 

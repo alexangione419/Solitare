@@ -17,6 +17,7 @@ class Deck:
             for v in values:
                 self.deck.append(Card(v, s, 0, 0))
         
+        #Places the cards where they should go
         current_slot_x = 135
         slots = 1
         c_card = 0
