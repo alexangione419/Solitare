@@ -13,7 +13,10 @@ class Card:
 
         self.sprite = arcade.Sprite(self.image, center_x = self.centerx, center_y = self.centery)
 
+        
+
     
     def __str__(self) -> str:
+        self.sprite
         return f'{self.value} of {self.suit}'
 

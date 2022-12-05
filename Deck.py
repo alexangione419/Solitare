@@ -55,3 +55,10 @@ class Deck:
             old.pop(card_to_remove)
 
         self.deck = shuffled
+
+    def get_card(self, x, y):
+        for card in self.deck:
+            if card.centerx == x and card.centery == y:
+                print(card)
+                return card
+
