@@ -16,7 +16,8 @@ class Deck:
         for s in suits:
             for v in values:
                 self.deck.append(Card(v, s, 0, 0))
-        
+        self.shuffle()
+
         #Places the cards where they should go
         current_slot_x = 135
         slots = 1
@@ -47,7 +48,7 @@ class Deck:
     def shuffle(self) -> None:
         shuffled = []
         old = []
-        old += self.deck
+        old = old + self.deck
         for i in range(len(self.deck)):
             card_to_remove = random.randint(0, len(self.deck) - 1 - i)
             shuffled.append(old[card_to_remove])

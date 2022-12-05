@@ -14,12 +14,8 @@ class Game(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT,'Solitaire')
         # creates the list of card sprites
         self.all_sprites = arcade.SpriteList()
-        # creates the deck of cards and __________
+        # creates the deck of cards, shuffles them, and arranges them for play
         self.playableDeck = Deck()
-        # shuffles around the deck of cards withouth changing overall card positions
-        
-        #### SHUFFLE ISNT WORKING FOR SOME REASON REMEMBER THATS A THING ####
-        self.playableDeck.shuffle()
 
         self.slot1 = playSlot(135, 580)
         self.slot2 = playSlot(405, 580)
@@ -60,8 +56,12 @@ class Game(arcade.Window):
             self.held_card[0] = arcade.get_sprites_at_point((x, y), self.all_sprites)[::-1][0]
             self.held_card[1] = (x, y)
 
+            self.all_sprites.remove(self.held_card[0])
+            self.all_sprites.insert(len(self.all_sprites) - 1, self.held_card[0])
+
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
+        self.held_card[0] = 0
         
         if(self.slot1.within(x, y)):
             if self.slot1.add_card(self.held_card[0]):
@@ -70,6 +70,47 @@ class Game(arcade.Window):
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
 
+        # if(self.slot2.within(x, y)):
+        #     if self.slot2.add_card(self.held_card[0]):
+        #         self.held_card = 0
+        #     else:
+        #         self.held_card[0].center_x = self.held_card[1][0]
+        #         self.held_card[0].center_y = self.held_card[1][1]
+        
+        # if(self.slot3.within(x, y)):
+        #     if self.slot3.add_card(self.held_card[0]):
+        #         self.held_card = 0
+        #     else:
+        #         self.held_card[0].center_x = self.held_card[1][0]
+        #         self.held_card[0].center_y = self.held_card[1][1]
+
+        # if(self.slot4.within(x, y)):
+        #     if self.slot4.add_card(self.held_card[0]):
+        #         self.held_card = 0
+        #     else:
+        #         self.held_card[0].center_x = self.held_card[1][0]
+        #         self.held_card[0].center_y = self.held_card[1][1]
+        
+        # if(self.slot5.within(x, y)):
+        #     if self.slot5.add_card(self.held_card[0]):
+        #         self.held_card = 0
+        #     else:
+        #         self.held_card[0].center_x = self.held_card[1][0]
+        #         self.held_card[0].center_y = self.held_card[1][1]
+        
+        # if(self.slot6.within(x, y)):
+        #     if self.slot6.add_card(self.held_card[0]):
+        #         self.held_card = 0
+        #     else:
+        #         self.held_card[0].center_x = self.held_card[1][0]
+        #         self.held_card[0].center_y = self.held_card[1][1]
+        
+        # if(self.slot7.within(x, y)):
+        #     if self.slot7.add_card(self.held_card[0]):
+        #         self.held_card = 0
+        #     else:
+        #         self.held_card[0].center_x = self.held_card[1][0]
+        #         self.held_card[0].center_y = self.held_card[1][1]
 
 
         return super().on_mouse_release(x, y, button, modifiers)
