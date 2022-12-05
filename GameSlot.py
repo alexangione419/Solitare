@@ -10,7 +10,7 @@ class GameSlot():
         self.front_card = fcard
         self.cards_within = cards
 
-        self.ref_vals = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A']
+        self.ref_vals = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
         
 
 

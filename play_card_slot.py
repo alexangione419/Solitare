@@ -4,9 +4,7 @@ from GameSlot import GameSlot
 
 class playSlot(GameSlot):
     def __init__(self, x_pos, y_pos, loC : list) -> None:
-        print(loC[len(loC)-1])
         loC.reverse()
-        print(loC[0])
         super().__init__(x_pos, y_pos, loC[0], loC[1:])
 
 
