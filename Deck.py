@@ -59,6 +59,5 @@ class Deck:
     def get_card(self, x, y):
         for card in self.deck:
             if card.centerx == x and card.centery == y:
-                print(card)
                 return card
 

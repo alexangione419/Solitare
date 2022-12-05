@@ -17,15 +17,18 @@ class Game(arcade.Window):
         self.all_sprites = arcade.SpriteList()
         # creates the deck of cards, shuffles them, and arranges them for play
         self.playableDeck = Deck()
-        
+
+
         self.slot1 = playSlot(135, 580, self.playableDeck.deck[0:1])
         self.slot2 = playSlot(405, 580, self.playableDeck.deck[1:3])
         self.slot3 = playSlot(675, 580, self.playableDeck.deck[3:6])
         self.slot4 = playSlot(945, 580, self.playableDeck.deck[6:10])
-        self.slot5 = playSlot(1215, 580, self.playableDeck.deck[10:16])
-        self.slot6 = playSlot(1485, 580, self.playableDeck.deck[16:22])
-        self.slot7 = playSlot(1755, 580, self.playableDeck.deck[22:29])
+        self.slot5 = playSlot(1215, 580, self.playableDeck.deck[10:15])
+        self.slot6 = playSlot(1485, 580, self.playableDeck.deck[15:21])
+        self.slot7 = playSlot(1755, 580, self.playableDeck.deck[21:28])
+        print(self.playableDeck.deck[28])
 
+        self.all_play_slots = [self.slot1, self.slot2, self.slot3, self.slot4, self.slot5, self.slot6, self.slot7]
         # self.win_Slot_1 = 
         # self.win_Slot_2 = 
         # self.win_Slot_3 = 
@@ -42,12 +45,12 @@ class Game(arcade.Window):
             # the first item will be the card sprite
             # the second tuple will be the original x and y
             # the third will be the card object
-        self.held_card = [0, (0, 0), 0]
+            # the fourth item will be the cards current slot
+        self.held_card = [0, (0, 0), 0, 0]
   
 
     def on_draw(self):
         # sets the background of the board
-        # arcade.set_background_color(arcade.color.BOTTLE_GREEN)
         
         arcade.start_render()
         arcade.draw_texture_rectangle(949, 537, 1898, 1074, self.background)
@@ -58,9 +61,11 @@ class Game(arcade.Window):
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         ## selects the frontmost card the player clicks on
         if len(arcade.get_sprites_at_point((x, y), self.all_sprites)) > 0:
+            
             self.held_card[0] = arcade.get_sprites_at_point((x, y), self.all_sprites)[::-1][0]
-            self.held_card[1] = (x, y)
+            self.held_card[1] = (self.held_card[0].center_x, self.held_card[0].center_y)
             self.held_card[2] = self.playableDeck.get_card(self.held_card[0].center_x, self.held_card[0].center_y)
+            self.held_card[3] = self.get_slot(self.all_play_slots, x, 0, 6)
 
             # brings the sprite to the back of the sprite list to place it on top of the others
             self.all_sprites.remove(self.held_card[0])
@@ -69,83 +74,93 @@ class Game(arcade.Window):
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):        
         
+        prev_slot = self.held_card[3]
+        #if you are over a slot
         if(self.slot1.within(x, y)):
+            # if the card you are holding can be placed in it, do it
             if self.slot1.add_card(self.held_card[2]):
-                self.held_card = [0, (0, 0), 0]
+                prev_slot.remove_front()
+                self.held_card = [0, (0, 0), 0, prev_slot]
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
                 self.held_card[2].centerx = self.held_card[1][0]
                 self.held_card[2].centery = self.held_card[1][1]
-                self.held_card = [0, (0, 0), 0]
+                self.held_card = [0, (0, 0), 0, prev_slot]
 
 
         elif(self.slot2.within(x, y)):
             if self.slot2.add_card(self.held_card[2]):
-                self.held_card = [0, (0, 0), 0]
+                prev_slot.remove_front()
+                self.held_card = [0, (0, 0), 0, prev_slot]
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
                 self.held_card[2].centerx = self.held_card[1][0]
                 self.held_card[2].centery = self.held_card[1][1]
-                self.held_card = [0, (0, 0), 0]
+                self.held_card = [0, (0, 0), 0, prev_slot]
         
         elif(self.slot3.within(x, y)):
             if self.slot3.add_card(self.held_card[2]):
-                self.held_card = [0, (0, 0), 0]
+                prev_slot.remove_front()
+                self.held_card = [0, (0, 0), 0, prev_slot]
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
                 self.held_card[2].centerx = self.held_card[1][0]
                 self.held_card[2].centery = self.held_card[1][1]
-                self.held_card = [0, (0, 0), 0]
+                self.held_card = [0, (0, 0), 0, prev_slot]
 
         elif(self.slot4.within(x, y)):
             if self.slot4.add_card(self.held_card[2]):
-                self.held_card = [0, (0, 0), 0]
+                prev_slot.remove_front()
+                self.held_card = [0, (0, 0), 0, prev_slot]
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
                 self.held_card[2].centerx = self.held_card[1][0]
                 self.held_card[2].centery = self.held_card[1][1]
-                self.held_card = [0, (0, 0), 0]
+                self.held_card = [0, (0, 0), 0, prev_slot]
         
         elif(self.slot5.within(x, y)):
             if self.slot5.add_card(self.held_card[2]):
-                self.held_card = [0, (0, 0), 0]
+                prev_slot.remove_front()
+                self.held_card = [0, (0, 0), 0, prev_slot]
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
                 self.held_card[2].centerx = self.held_card[1][0]
                 self.held_card[2].centery = self.held_card[1][1]
-                self.held_card = [0, (0, 0), 0]
+                self.held_card = [0, (0, 0), 0, prev_slot]
         
         elif(self.slot6.within(x, y)):
             if self.slot6.add_card(self.held_card[2]):
-                self.held_card = [0, (0, 0), 0]
+                prev_slot.remove_front()
+                self.held_card = [0, (0, 0), 0, prev_slot]
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
                 self.held_card[2].centerx = self.held_card[1][0]
                 self.held_card[2].centery = self.held_card[1][1]
-                self.held_card = [0, (0, 0), 0]
+                self.held_card = [0, (0, 0), 0, prev_slot]
         
         elif(self.slot7.within(x, y)):
             if self.slot7.add_card(self.held_card[2]):
-                self.held_card = [0, (0, 0), 0]
+                prev_slot.remove_front()
+                self.held_card = [0, (0, 0), 0, prev_slot]
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
                 self.held_card[2].centerx = self.held_card[1][0]
                 self.held_card[2].centery = self.held_card[1][1]
-                self.held_card = [0, (0, 0), 0]
+                self.held_card = [0, (0, 0), 0, prev_slot]
 
         else:
             self.held_card[0].center_x = self.held_card[1][0]
             self.held_card[0].center_y = self.held_card[1][1]
             self.held_card[2].centerx = self.held_card[1][0]
             self.held_card[2].centery = self.held_card[1][1]
-            self.held_card = [0, (0, 0), 0]
+            self.held_card = [0, (0, 0), 0, prev_slot]
 
         return super().on_mouse_release(x, y, button, modifiers)
         
@@ -156,6 +171,18 @@ class Game(arcade.Window):
             self.held_card[0].center_y += dy
             self.held_card[2].centerx += dx
             self.held_card[2].centery += dy
+
+    def get_slot(self, slots, x, left, right):
+        if left > right:
+            return 0
+        middle = (left + right) // 2
+        if slots[middle].x_pos - 75 < x and slots[middle].x_pos + 75 > x:
+            return slots[middle]
+        elif slots[middle].x_pos + 75 < x:
+            return self.get_slot(slots, x, middle + 1, right)
+        else:
+            return self.get_slot(slots, x, left, middle - 1)
+
  
                             
 
