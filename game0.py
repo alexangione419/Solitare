@@ -29,7 +29,7 @@ class Game(arcade.Window):
         self.slot7 = playSlot(1755, 580, self.playableDeck.deck[21:28])
         self.all_play_slots = [self.slot1, self.slot2, self.slot3, self.slot4, self.slot5, self.slot6, self.slot7]
         
-        self.draw_slot = drawSlot(80, 970, self.playableDeck.deck[28:])
+        self.draw_slot = drawSlot(240, 970, self.playableDeck.deck[28:])
 
         # self.win_Slot_1 = 
         # self.win_Slot_2 = 
@@ -42,7 +42,9 @@ class Game(arcade.Window):
 
         for i in range(len(self.playableDeck.deck)):
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
-
+        #creating a new card button as a sprite
+        self.Card_Button = arcade.Sprite(":resources:images/cards/cardBack_red2.png", center_x = 80, center_y = 970)
+        self.all_sprites.append(self.Card_Button)
         # the card you are holding 
             # the first item will be the card sprite
             # the second tuple will be the original x and y
@@ -64,7 +66,9 @@ class Game(arcade.Window):
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         on_sprites = arcade.get_sprites_at_point((x, y), self.all_sprites)
         ## selects the frontmost card the player clicks on
-        if len(on_sprites) > 0:    
+        if on_sprites == self.all_sprites[52]:
+            quit
+        if len(on_sprites) > 0 and on_sprites != self.all_sprites[52]:    
             self.held_card[0] = on_sprites[-1]
             self.held_card[1] = (self.held_card[0].center_x, self.held_card[0].center_y)
             self.held_card[2] = self.playableDeck.get_card(self.held_card[0].center_x, self.held_card[0].center_y)

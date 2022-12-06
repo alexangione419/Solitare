@@ -38,7 +38,7 @@ class Deck:
             cards_to_place = slots
             current_slot_x += 270
         
-        deckx = 80.000
+        deckx = 240.000
         decky = 970.000
         for i in range(c_card, len(self.deck)):
             self.deck[i].centerx = self.deck[i].sprite.center_x = deckx + (.001 * i)
