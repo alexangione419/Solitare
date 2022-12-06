@@ -38,13 +38,12 @@ class Deck:
             cards_to_place = slots
             current_slot_x += 270
         
-        deckx = 80
-        decky = 970
+        deckx = 80.000
+        decky = 970.000
         for i in range(c_card, len(self.deck)):
-            self.deck[i].centerx = deckx + (.001 * i)
-            self.deck[i].centery = decky + (.001 * i)
-            self.deck[i].sprite.center_x = deckx + (.001 * i)
-            self.deck[i].sprite.center_y = decky + (.001 * i)
+            self.deck[i].centerx = self.deck[i].sprite.center_x = deckx + (.001 * i)
+            self.deck[i].centery = self.deck[i].sprite.center_y = decky + (.001 * i)
+
 
 
     def shuffle(self) -> None:

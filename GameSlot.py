@@ -11,6 +11,15 @@ class GameSlot():
         self.cards_within = cards
 
         self.ref_vals = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
+
+
+    def remove_front(self):
+        if len(self.cards_within) > 0:
+            self.front_card = self.cards_within[0]
+            self.cards_within = self.cards_within[1:]
+        else:
+            self.front_card = 0
+            self.cards_within = []
         
 
 
