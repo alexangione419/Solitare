@@ -1,10 +1,12 @@
 import arcade
+import arcade.gui
 from Suit import Suit
 from Card import Card
 from play_card_slot import playSlot
 from win_card_slot import winSlot
 from draw_card_slot import drawSlot
 from Deck import Deck
+from new_card_button import newCard
 
 
 SCREEN_WIDTH = 1898
@@ -35,14 +37,23 @@ class Game(arcade.Window):
         # self.win_Slot_2 = 
         # self.win_Slot_3 = 
         # self.win_Slot_4 = 
+  
 
+        
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+       
+        newCard.newC_button = arcade.gui.UITextureButton(x=80, y=970,
+         texture=arcade.load_texture(':resources:images/cards/cardBack_green3.png'), texture_hovered=arcade.load_texture(':resources:images/cards/cardBack_green2.png'),
+          texture_pressed=arcade.load_texture(':resources:images/cards/cardBack_red3.png'))
+        newCard.newC_button.on_click = newCard.on_click
+        
+        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x='left', align_x= +15, anchor_y='top', align_y= -10, child=newCard.newC_button))
 
-
-        self.background = arcade.load_texture("background.png")
+        
 
         for i in range(len(self.playableDeck.deck)):
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
-        
         # the card you are holding 
             # the first item will be the card sprite
             # the second tuple will be the original x and y
@@ -50,7 +61,7 @@ class Game(arcade.Window):
             # the fourth item will be the cards current slot
         self.held_card = [0, (0, 0), 0, 0]
         self.prev_slot = 0
-  
+        self.background = arcade.load_texture("background.png")
 
     def on_draw(self):
         # sets the background of the board
@@ -59,13 +70,17 @@ class Game(arcade.Window):
         arcade.draw_texture_rectangle(949, 537, 1898, 1074, self.background)
 
         self.all_sprites.draw()
+        self.manager.draw()
     
-   
+    # @staticmethod
+    # def on_click_button(event):
+    #     print('Button clicked!')
+
+
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         on_sprites = arcade.get_sprites_at_point((x, y), self.all_sprites)
         ## selects the frontmost card the player clicks on
-        
-        if len(on_sprites) > 0 and on_sprites != self.all_sprites[52]:    
+        if len(on_sprites) > 0:    
             self.held_card[0] = on_sprites[-1]
             self.held_card[1] = (self.held_card[0].center_x, self.held_card[0].center_y)
             self.held_card[2] = self.playableDeck.get_card(self.held_card[0].center_x, self.held_card[0].center_y)
