@@ -43,14 +43,15 @@ class Game(arcade.Window):
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
        
-        newCard.newC_button = arcade.gui.UITextureButton(x=80, y=970,
-         texture=arcade.load_texture(':resources:images/cards/cardBack_green3.png'), texture_hovered=arcade.load_texture(':resources:images/cards/cardBack_green2.png'),
+        newC_button = arcade.gui.UITextureButton(x=80, y=970,
+         texture=arcade.load_texture(':resources:images/cards/cardBack_green3.png'),
+          texture_hovered=arcade.load_texture(':resources:images/cards/cardBack_green2.png'),
           texture_pressed=arcade.load_texture(':resources:images/cards/cardBack_red3.png'))
-        newCard.newC_button.on_click = newCard.on_click
         
-        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x='left', align_x= +15, anchor_y='top', align_y= -10, child=newCard.newC_button))
+        newC_button.on_click = newCard.on_click_button
 
-        
+        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x='left', align_x= +15, anchor_y='top', align_y= -10, child=newC_button))
+
 
         for i in range(len(self.playableDeck.deck)):
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
@@ -63,6 +64,7 @@ class Game(arcade.Window):
         self.prev_slot = 0
         self.background = arcade.load_texture("background.png")
 
+    
     def on_draw(self):
         # sets the background of the board
         
