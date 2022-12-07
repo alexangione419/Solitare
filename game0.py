@@ -43,6 +43,7 @@ class Game(arcade.Window):
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
        
+
         newC_button = arcade.gui.UITextureButton(x=80, y=970,
          texture=arcade.load_texture(':resources:images/cards/cardBack_green3.png'),
           texture_hovered=arcade.load_texture(':resources:images/cards/cardBack_green2.png'),
@@ -55,13 +56,13 @@ class Game(arcade.Window):
 
         for i in range(len(self.playableDeck.deck)):
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
+        
         # the card you are holding 
             # the first item will be the card sprite
             # the second tuple will be the original x and y
             # the third will be the card object
             # the fourth item will be the cards current slot
         self.held_card = [0, (0, 0), 0, 0]
-        self.prev_slot = 0
         self.background = arcade.load_texture("background.png")
 
     
