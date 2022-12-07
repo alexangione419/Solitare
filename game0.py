@@ -2,11 +2,11 @@ import arcade
 import arcade.gui
 from Suit import Suit
 from Card import Card
-from play_card_slot import playSlot
+from play_slot import playSlot
 from win_card_slot import winSlot
-from draw_card_slot import drawSlot
+from draw_slot import drawSlot
 from Deck import Deck
-from new_card_button import newCard
+# from new_card_button import newCard
 
 
 SCREEN_WIDTH = 1898
@@ -40,22 +40,25 @@ class Game(arcade.Window):
   
 
         
-        self.manager = arcade.gui.UIManager()
-        self.manager.enable()
+        # self.manager = arcade.gui.UIManager()
+        # self.manager.enable()
        
 
-        newC_button = arcade.gui.UITextureButton(x=80, y=970,
-         texture=arcade.load_texture(':resources:images/cards/cardBack_green3.png'),
-          texture_hovered=arcade.load_texture(':resources:images/cards/cardBack_green2.png'),
-          texture_pressed=arcade.load_texture(':resources:images/cards/cardBack_red3.png'))
+        # newC_button = arcade.gui.UITextureButton(x=80, y=970,
+        #  texture=arcade.load_texture(':resources:images/cards/cardBack_green3.png'),
+        #   texture_hovered=arcade.load_texture(':resources:images/cards/cardBack_green2.png'),
+        #   texture_pressed=arcade.load_texture(':resources:images/cards/cardBack_red3.png'))
         
-        newC_button.on_click = newCard.on_click_button
+        # newC_button.on_click = self.on_click_button
 
-        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x='left', align_x= +15, anchor_y='top', align_y= -10, child=newC_button))
+        # self.manager.add(arcade.gui.UIAnchorWidget(anchor_x='left', align_x= +15, anchor_y='top', align_y= -10, child=newC_button))
 
 
         for i in range(len(self.playableDeck.deck)):
             self.all_sprites.append(self.playableDeck.deck[i].sprite)
+        
+        self.button = arcade.Sprite(':resources:images/cards/cardBack_green3.png', center_x = 87, center_y = 970)
+        self.all_sprites.append(self.button)
         
         # the card you are holding 
             # the first item will be the card sprite
@@ -65,7 +68,12 @@ class Game(arcade.Window):
         self.held_card = [0, (0, 0), 0, 0]
         self.background = arcade.load_texture("background.png")
 
-    
+    # @staticmethod
+    # def on_click_button(self, event):
+    #     print('Button clicked!')
+    #     self.draw_slot 
+
+
     def on_draw(self):
         # sets the background of the board
         
@@ -73,25 +81,41 @@ class Game(arcade.Window):
         arcade.draw_texture_rectangle(949, 537, 1898, 1074, self.background)
 
         self.all_sprites.draw()
-        self.manager.draw()
-    
-    # @staticmethod
-    # def on_click_button(event):
-    #     print('Button clicked!')
+        # self.manager.draw()
+
 
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        
         on_sprites = arcade.get_sprites_at_point((x, y), self.all_sprites)
+
+        if len(on_sprites) > 0 and on_sprites[-1] == self.button:
+            if len(self.draw_slot.cards_within) == 0:
+                self.button.visible = False
+                new_card = self.draw_slot.draw_card()
+                self.all_sprites.remove(new_card.sprite)
+                self.all_sprites.append(new_card.sprite)
+            else:
+                new_card = self.draw_slot.draw_card()
+                self.all_sprites.remove(new_card.sprite)
+                self.all_sprites.append(new_card.sprite)
+            
+            
+                
+            
         ## selects the frontmost card the player clicks on
-        if len(on_sprites) > 0:    
+        elif len(on_sprites) > 0:  
+            self.all_sprites.remove(self.button)
             self.held_card[0] = on_sprites[-1]
             self.held_card[1] = (self.held_card[0].center_x, self.held_card[0].center_y)
             self.held_card[2] = self.playableDeck.get_card(self.held_card[0].center_x, self.held_card[0].center_y)
             self.held_card[3] = self.get_slot(self.all_play_slots, x, y, 0, 6)
+            
 
             # brings the sprite to the back of the sprite list to place it on top of the others
             self.all_sprites.remove(self.held_card[0])
-            self.all_sprites.insert(len(self.all_sprites), self.held_card[0])
+            self.all_sprites.append(self.button)
+            self.all_sprites.append(self.held_card[0])
 
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int): 
@@ -102,7 +126,8 @@ class Game(arcade.Window):
             # if the card you are holding can be placed in it, do it
             if self.slot1.valid_placement(self.held_card[2]):
                 self.slot1.add_card(self.held_card[2])
-                self.prev_slot.remove_front()
+                if self.prev_slot != 0:
+                    self.prev_slot.remove_front()
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
@@ -112,7 +137,8 @@ class Game(arcade.Window):
         elif(self.slot2.within(x, y)):
             if self.slot2.valid_placement(self.held_card[2]):
                 self.slot2.add_card(self.held_card[2])
-                self.prev_slot.remove_front()  
+                if self.prev_slot != 0:
+                    self.prev_slot.remove_front()
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
@@ -122,7 +148,8 @@ class Game(arcade.Window):
         elif(self.slot3.within(x, y)):
             if self.slot3.valid_placement(self.held_card[2]):
                 self.slot3.add_card(self.held_card[2])
-                self.prev_slot.remove_front() 
+                if self.prev_slot != 0:
+                    self.prev_slot.remove_front()
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
@@ -133,7 +160,8 @@ class Game(arcade.Window):
         elif(self.slot4.within(x, y)):
             if self.slot4.valid_placement(self.held_card[2]):
                 self.slot4.add_card(self.held_card[2])
-                self.prev_slot.remove_front()
+                if self.prev_slot != 0:
+                    self.prev_slot.remove_front()
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
@@ -144,7 +172,8 @@ class Game(arcade.Window):
         elif(self.slot5.within(x, y)):
             if self.slot5.valid_placement(self.held_card[2]):
                 self.slot5.add_card(self.held_card[2])
-                self.prev_slot.remove_front()  
+                if self.prev_slot != 0:
+                    self.prev_slot.remove_front()
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
@@ -155,7 +184,8 @@ class Game(arcade.Window):
         elif(self.slot6.within(x, y)):
             if self.slot6.valid_placement(self.held_card[2]):
                 self.slot6.add_card(self.held_card[2])
-                self.prev_slot.remove_front()
+                if self.prev_slot != 0:
+                    self.prev_slot.remove_front()
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
@@ -165,7 +195,8 @@ class Game(arcade.Window):
         elif(self.slot7.within(x, y)):
             if self.slot7.valid_placement(self.held_card[2]):
                 self.slot7.add_card(self.held_card[2])
-                self.prev_slot.remove_front()
+                if self.prev_slot != 0:
+                    self.prev_slot.remove_front()
             else:
                 self.held_card[0].center_x = self.held_card[1][0]
                 self.held_card[0].center_y = self.held_card[1][1]
@@ -191,7 +222,7 @@ class Game(arcade.Window):
             self.held_card[2].centery += dy
 
     def get_slot(self, slots, x, y, left, right):
-        if y > 870:
+        if y > 870 and x < 175:
             return self.draw_slot
         if left > right:
             return 0
@@ -205,8 +236,6 @@ class Game(arcade.Window):
 
  
                             
-
-
 
 def main():
     solitare = Game()
