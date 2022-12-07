@@ -18,3 +18,23 @@ class drawSlot(GameSlot):
         self.remove_front()
         return self.already_drawn[-1]
 
+
+    def reset_deck(self):
+        self.front_card = self.already_drawn[0]
+        self.cards_within = self.already_drawn[1:]
+        
+        self.already_drawn = []
+
+        self.front_card.centerx -= 160
+        self.front_card.sprite.center_x -= 160
+
+        for card in self.cards_within:
+            card.centerx -= 160
+            card.sprite.center_x -= 160
+
+
+    # def remove_front(self):
+    #     if len(self.cards_within) > 0:
+    #         self.already_drawn.pop(len(self.already_drawn)-1)
+    #     else:
+    #         self.cards_within = []

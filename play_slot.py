@@ -24,5 +24,11 @@ class playSlot(GameSlot):
     def within(self, x, y) -> bool:
         return self.x_pos - 75 <= x and self.x_pos + 75 >= x and y < 680
 
-    
+    def remove_front(self):
+        if len(self.cards_within) > 0:
+            self.front_card = self.cards_within[0]
+            self.cards_within = self.cards_within[1:]
+        else:
+            self.front_card = 0
+            self.cards_within = []
 

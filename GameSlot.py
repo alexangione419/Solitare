@@ -14,6 +14,7 @@ class GameSlot():
 
 
     def remove_front(self):
+        print("What the actual fuck")
         if len(self.cards_within) > 0:
             self.front_card = self.cards_within[0]
             self.cards_within = self.cards_within[1:]
