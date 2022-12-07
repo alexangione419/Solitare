@@ -15,10 +15,28 @@ class drawSlot(GameSlot):
         self.front_card.sprite.center_x += 160
         
         self.already_drawn.append(self.front_card)
-        self.remove_front()
+        self.shift_front()
+
         return self.already_drawn[-1]
 
 
+    def shift_front(self):
+        if len(self.cards_within) > 0:
+            self.front_card = self.cards_within[0]
+            self.cards_within = self.cards_within[1:]
+        else:
+            self.front_card = 0
+            self.cards_within = []
+
+
+    def remove_front(self):
+        if len(self.already_drawn) > 0:
+            self.already_drawn = self.already_drawn[:len(self.already_drawn)-1]
+
+        else:
+            self.already_drawn = []
+
+    
     def reset_deck(self):
         self.front_card = self.already_drawn[0]
         self.cards_within = self.already_drawn[1:]
@@ -31,10 +49,3 @@ class drawSlot(GameSlot):
         for card in self.cards_within:
             card.centerx -= 160
             card.sprite.center_x -= 160
-
-
-    # def remove_front(self):
-    #     if len(self.cards_within) > 0:
-    #         self.already_drawn.pop(len(self.already_drawn)-1)
-    #     else:
-    #         self.cards_within = []

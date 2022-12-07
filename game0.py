@@ -105,7 +105,6 @@ class Game(arcade.Window):
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int): 
         self.prev_slot = self.held_card[3]
-        print("this is fine")
         #if you are over a slot
         if(self.slot1.within(x, y)):
             # if the card you are holding can be placed in it, do it
