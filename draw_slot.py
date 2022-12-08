@@ -63,7 +63,7 @@ class drawSlot(GameSlot):
 
     
     def reset_deck(self):
-        """resets the deck with all of the cards the player has not drawn from so they may begin to draw from it again
+        """resets the deck with all of the cards the player has not drawn from so they may begin to draw from it
         """
         self.front_card = self.already_drawn[0]
         self.cards_within = self.already_drawn[1:]
@@ -76,3 +76,12 @@ class drawSlot(GameSlot):
         for card in self.cards_within:
             card.centerx -= 160
             card.sprite.center_x -= 160
+
+
+    def valid_placement(self, card : Card):
+        """method to ensure a player cannot place a card back onto the draw slot
+
+        Returns:
+            boolean: always false
+        """
+        return False

@@ -41,6 +41,17 @@ class playSlot(GameSlot):
             self.front_card = card
             self.cards_within.append(card)
 
+    def remove_front(self):
+        """method that removes the front card from a particular slot and adjusts the slot accordingly
+        """
+        if len(self.cards_within) > 0:
+            self.front_card = self.cards_within[0]
+            self.cards_within = self.cards_within[1:]
+        else:
+            self.front_card = 0
+            self.cards_within = []
+
+
     def within(self, x, y) -> bool:
         """determines if the given x and y fall within the borders of the slot
 
