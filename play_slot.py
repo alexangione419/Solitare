@@ -67,6 +67,8 @@ class playSlot(GameSlot):
             self.cards_within = []
 
     def set_behind_cards(self):
+        """makes all of the cards behind the front card face down
+        """
         for card in self.cards_within:
             card.sprite.set_texture(1)
 

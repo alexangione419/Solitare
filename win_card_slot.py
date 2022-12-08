@@ -1,4 +1,3 @@
-import arcade
 from Card import Card
 from GameSlot import GameSlot
 

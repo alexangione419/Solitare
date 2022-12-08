@@ -1,6 +1,4 @@
-from Card import Card
-from Suit import Suit
-import arcade
+from Card import Card, Suit
 import random
 
 class Deck:

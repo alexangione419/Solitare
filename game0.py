@@ -1,7 +1,4 @@
 import arcade
-import arcade.gui
-from Suit import Suit
-from Card import Card
 from play_slot import playSlot
 from win_card_slot import winSlot
 from draw_slot import drawSlot
@@ -211,17 +208,13 @@ class Game(arcade.Window):
                 return self.get_slot(slots, x, y, middle + 1, right)
             else:
                 return self.get_slot(slots, x, y, left, middle - 1)
-
- 
-                            
+           
 
 def main():
     """the main method where the game is initially begun
     """
     solitare = Game()
     arcade.run()
-
-
 
 if __name__ == "__main__":
     main()

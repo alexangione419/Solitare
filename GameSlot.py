@@ -1,6 +1,4 @@
-import arcade
 from Card import Card
-from Suit import Suit
 
 # represents a slot for cards to be held during the game
 class GameSlot():
