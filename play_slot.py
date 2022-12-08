@@ -33,11 +33,23 @@ class playSlot(GameSlot):
         Args:
             card (Card): the card to be added to the slot
         """
+        
+
         if self.front_card == 0 and card.value == 'K':
+            card.centerx = self.x_pos
+            card.centery = self.y_pos
+            card.sprite.center_x = self.x_pos
+            card.sprite.center_y = self.y_pos
+
             self.front_card = card
             self.cards_within.append(card)
 
         elif (self.ref_vals.index(card.value) == self.ref_vals.index(self.front_card.value) - 1) and (card.suit.color != self.front_card.suit.color):
+            card.centerx = self.front_card.centerx + 0.001
+            card.centery = self.front_card.centery - 40
+            card.sprite.center_x = self.front_card.centerx + 0.001
+            card.sprite.center_y = self.front_card.centery - 40
+            
             self.front_card = card
             self.cards_within.append(card)
 
@@ -51,16 +63,4 @@ class playSlot(GameSlot):
             self.front_card = 0
             self.cards_within = []
 
-
-    def within(self, x, y) -> bool:
-        """determines if the given x and y fall within the borders of the slot
-
-        Args:
-            x (int): the x position to check
-            y (int): the y position to check
-
-        Returns:
-            bool: wether or not the given coordinates are within the slot's boundaries
-        """
-        return self.x_pos - 75 <= x and self.x_pos + 75 >= x and y < 680
 

@@ -36,7 +36,7 @@ class Deck:
                 self.deck[c_card].sprite.center_y = current_slot_y
 
                 c_card += 1
-                current_slot_y -= 50
+                current_slot_y -= 40
                 cards_to_place -= 1
             slots += 1
             cards_to_place = slots

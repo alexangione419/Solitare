@@ -37,9 +37,9 @@ class Game(arcade.Window):
         # creates the slot from which players can draw their cards
         self.draw_slot = drawSlot(240, 970, self.playableDeck.deck[28:])
 
-        self.win_slot_1 = winSlot(1060, 890)
-        self.win_slot_2 = winSlot(1320, 980)
-        self.win_slot_3 = winSlot(1560, 980)
+        self.win_slot_1 = winSlot(1070, 890)
+        self.win_slot_2 = winSlot(1320, 890)
+        self.win_slot_3 = winSlot(1560, 890)
         self.win_slot_4 = winSlot(1800, 890)
 
 
@@ -111,7 +111,6 @@ class Game(arcade.Window):
             self.held_card[1] = (self.held_card[0].center_x, self.held_card[0].center_y)
             self.held_card[2] = self.playableDeck.get_card(self.held_card[0].center_x, self.held_card[0].center_y)
             self.held_card[3] = self.get_slot(self.all_play_slots, x, y, 0, 6)
-            print(self.held_card[3].front_card)
 
             # brings the sprite to the back of the sprite list to place it on top of the others
             self.all_sprites.remove(self.held_card[0])
@@ -119,7 +118,7 @@ class Game(arcade.Window):
             self.all_sprites.append(self.held_card[0])
 
     
-    def on_mouse_release(self, x: int, y: int, button: int, modifiers: int): 
+    def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
         """determines the behavior when the mouse button is released
 
         Args:
@@ -132,7 +131,7 @@ class Game(arcade.Window):
         self.prev_slot = self.held_card[3]
         over_this_slot = self.get_slot(self.all_play_slots, x, y, 0, 6)
         
-        if over_this_slot.valid_placement(self.held_card[2]):
+        if over_this_slot != 0 and over_this_slot.valid_placement(self.held_card[2]):
             over_this_slot.add_card(self.held_card[2])
             if self.prev_slot != 0:
                 self.prev_slot.remove_front()
@@ -181,18 +180,26 @@ class Game(arcade.Window):
         Returns:
             gameSlot: returns the gameslot at the given position
         """
-        if y > 870:
+        if y > 690:
             if x < 400:
                 return self.draw_slot
             else:
-                if x > 940 and x < 1190:
+                if x >= 940 and x < 1190:
+                    print("fuck1")
+
                     return self.win_slot_1
-                elif x < 1191 and x < 1450:
+                elif x > 1191 and x < 1450:
+                    print("fuck2")
+
                     return self.win_slot_2
-                elif x < 1451 and x < 1691:
+                elif x > 1451 and x < 1691:
+                    print("fuck3")
                     return self.win_slot_3
-                elif x < 1691:
+                elif x > 1691:
+                    print("fuck")
                     return self.win_slot_4
+                else:
+                    return 0
         
         else:
             if left > right:

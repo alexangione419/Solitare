@@ -12,18 +12,6 @@ class drawSlot(GameSlot):
         """
         self.already_drawn = []
         super().__init__(x_pos, y_pos, loC[0], loC[1:])
-    
-    def within(self, x, y) -> bool:
-        """determines if the given x and y fall within the borders of the slot
-
-        Args:
-            x (int): the x position to check
-            y (int): the y position to check
-
-        Returns:
-            bool: wether or not the given coordinates are within the slot's boundaries
-        """
-        return self.x_pos - 75 <= x and self.x_pos + 75 >= x and y > 870
 
 
     def draw_card(self) -> Card:
