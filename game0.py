@@ -14,6 +14,8 @@ SCREEN_HEIGHT = 1074
 
 class Game(arcade.Window):
     def __init__(self):
+        """Initializes the game object 
+        """
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT,'Solitaire')
 
         # creates the list of card sprites
@@ -21,7 +23,7 @@ class Game(arcade.Window):
         # creates the deck of cards, shuffles them, and arranges them for play
         self.playableDeck = Deck()
 
-
+        # creates each of the 7 main slots the player will interact with
         self.slot1 = playSlot(135, 580, self.playableDeck.deck[0:1])
         self.slot2 = playSlot(405, 580, self.playableDeck.deck[1:3])
         self.slot3 = playSlot(675, 580, self.playableDeck.deck[3:6])
@@ -29,8 +31,10 @@ class Game(arcade.Window):
         self.slot5 = playSlot(1215, 580, self.playableDeck.deck[10:15])
         self.slot6 = playSlot(1485, 580, self.playableDeck.deck[15:21])
         self.slot7 = playSlot(1755, 580, self.playableDeck.deck[21:28])
+        # a list of all of the slots, used for finding each one in particular 
         self.all_play_slots = [self.slot1, self.slot2, self.slot3, self.slot4, self.slot5, self.slot6, self.slot7]
         
+        # creates the slot from which players can draw their cards
         self.draw_slot = drawSlot(240, 970, self.playableDeck.deck[28:])
 
         # self.win_Slot_1 = 
@@ -55,6 +59,8 @@ class Game(arcade.Window):
         self.background = arcade.load_texture("background.png")
 
     def on_draw(self):
+        """the method responsible for drawing all of the sprites onto the board
+        """
         # sets the background of the board
         
         arcade.start_render()
@@ -65,8 +71,17 @@ class Game(arcade.Window):
 
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):   
+        """ is activated whenever the user presses on the game board with their mouse
+
+        Args:
+            x (float): the x position the user has clicked on
+            y (float): the y position the user has clicked on
+            button (int): Unused but essential for function
+            modifiers (int): Unused but essential for function
+        """
         on_sprites = arcade.get_sprites_at_point((x, y), self.all_sprites)
 
+        # determines if the player has pressed the button and draws from the deck
         if len(on_sprites) > 0 and on_sprites[-1] == self.button:
             if not self.button.visible:
                 self.button.visible = True
@@ -88,7 +103,7 @@ class Game(arcade.Window):
                 self.all_sprites.append(new_card.sprite)
             
             
-        ## selects the frontmost card the player clicks on
+        # begins the process of moving the card selected by the player, chooses the frontmost card the player clicks on
         elif len(on_sprites) > 0:  
             self.all_sprites.remove(self.button)
             self.held_card[0] = on_sprites[-1]
@@ -104,6 +119,15 @@ class Game(arcade.Window):
 
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int): 
+        """determines the behavior when the mouse button is released
+
+        Args:
+            x (int): the x position where the mouse is released
+            y (int): the y position where the mouse is released
+            button (int): unused but required for function
+            modifiers (int): unused but required for function
+        """
+
         self.prev_slot = self.held_card[3]
         #if you are over a slot
         if(self.slot1.within(x, y)):
@@ -199,6 +223,14 @@ class Game(arcade.Window):
         
 
     def on_mouse_motion(self, x: float, y: float, dx: float, dy: float):
+        """as the mouse moves, this function is called
+
+        Args:
+            x (float): the initial x position of the mouse click
+            y (float): the initial y position of the mouse click
+            dx (float): the change in the x position from its initial position
+            dy (float): the change in the y position from its initial position
+        """
         if self.held_card[0] != 0:
             self.held_card[0].center_x += dx
             self.held_card[0].center_y += dy
@@ -206,6 +238,18 @@ class Game(arcade.Window):
             self.held_card[2].centery += dy
 
     def get_slot(self, slots, x, y, left, right):
+        """figues out what slot the user has pressed on
+
+        Args:
+            slots (list): the list of all of the possible play slots to be pressed on
+            x (int): the x position of the slot to be identified
+            y (int): the y position of the slot to be identified
+            left (int): for the binary search algorithm, the leftmost index of the list to check
+            right (int): for the binary search algorithm, the rightmost index of the list to check
+
+        Returns:
+            gameSlot: returns the gameslot at the given position
+        """
         if y > 870 and x < 600:
             return self.draw_slot
         if left > right:
@@ -222,6 +266,8 @@ class Game(arcade.Window):
                             
 
 def main():
+    """the main method where the game is initially begun
+    """
     solitare = Game()
     arcade.run()
 

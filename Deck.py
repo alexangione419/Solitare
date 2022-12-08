@@ -5,6 +5,10 @@ import random
 
 class Deck:
     def __init__(self) -> None:
+        """initializes a Deck object
+                does so by creating a suit object for each possible suit, and creating a list of every possible value a card can have
+                if then creates a card object for every combination of suit and value and places it into the deck
+        """ 
         spades = Suit("Spades", "black")
         clubs = Suit("Clubs", "black")
         diamonds = Suit("Diamonds", "red")
@@ -47,6 +51,8 @@ class Deck:
 
 
     def shuffle(self) -> None:
+        """shuffles the given deck by creating a copy and randomly choosing cards within to add to a "shuffled" list, which then becomes the main deck
+        """
         shuffled = []
         old = []
         old = old + self.deck
@@ -58,6 +64,15 @@ class Deck:
         self.deck = shuffled
 
     def get_card(self, x, y):
+        """checks if there is a card at the specific given x and y coordinate, and if so returns said card object
+
+        Args:
+            x (int): x position to check
+            y (int): y position to check
+
+        Returns:
+            _type_: _description_
+        """
         for card in self.deck:
             if card.centerx == x and card.centery == y:
                 return card

@@ -3,14 +3,35 @@ from Card import Card
 
 class drawSlot(GameSlot):
     def __init__(self, x_pos, y_pos, loC : list) -> None:
+        """initializes a slot representing all of the cards not on the board that the player can draw from
+
+        Args:
+            x_pos (int): the x position of the center of the slot on the game board
+            y_pos (int): the y position of the center of the slot on the game board
+            loC (list): the list of cards to be placed within the slot
+        """
         self.already_drawn = []
         super().__init__(x_pos, y_pos, loC[0], loC[1:])
     
     def within(self, x, y) -> bool:
+        """determines if the given x and y fall within the borders of the slot
+
+        Args:
+            x (int): the x position to check
+            y (int): the y position to check
+
+        Returns:
+            bool: wether or not the given coordinates are within the slot's boundaries
+        """
         return self.x_pos - 75 <= x and self.x_pos + 75 >= x and y > 870
 
 
-    def draw_card(self):
+    def draw_card(self) -> Card:
+        """draws a card to from the deck to be avalable for use by the player
+
+        Returns:
+            Card: returns the next available card for the player to draw
+        """
         self.front_card.centerx += 160
         self.front_card.sprite.center_x += 160
         
@@ -21,6 +42,8 @@ class drawSlot(GameSlot):
 
 
     def shift_front(self):
+        """shifts the items within the deck so that said card is no longer able to be drawn from the deck until the player resets the deck
+        """
         if len(self.cards_within) > 0:
             self.front_card = self.cards_within[0]
             self.cards_within = self.cards_within[1:]
@@ -30,6 +53,8 @@ class drawSlot(GameSlot):
 
 
     def remove_front(self):
+        """removes a card from the deck once the player uses it, ensure it will be fully taken from the drawable deck 
+        """
         if len(self.already_drawn) > 0:
             self.already_drawn = self.already_drawn[:len(self.already_drawn)-1]
 
@@ -38,6 +63,8 @@ class drawSlot(GameSlot):
 
     
     def reset_deck(self):
+        """resets the deck with all of the cards the player has not drawn from so they may begin to draw from it again
+        """
         self.front_card = self.already_drawn[0]
         self.cards_within = self.already_drawn[1:]
         
