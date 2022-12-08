@@ -20,5 +20,7 @@ class Card:
         self.image = f":resources:images/cards/card{self.suit.name}{self.value}.png"
 
         self.sprite = arcade.Sprite(self.image, center_x = self.centerx, center_y = self.centery)
+        self.back = arcade.load_texture(':resources:images/cards/cardBack_green3.png')
+        self.sprite.append_texture(self.back)
 
 

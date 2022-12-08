@@ -12,6 +12,7 @@ class playSlot(GameSlot):
         """
         loC.reverse()
         super().__init__(x_pos, y_pos, loC[0], loC[1:])
+        self.set_behind_cards()
 
     def valid_placement(self, card : Card) -> bool:
         """determines if the card given can be added to this slot based on the front card by the rules of solitare
@@ -59,8 +60,14 @@ class playSlot(GameSlot):
         if len(self.cards_within) > 0:
             self.front_card = self.cards_within[0]
             self.cards_within = self.cards_within[1:]
+
+            self.front_card.sprite.set_texture(0)
         else:
             self.front_card = 0
             self.cards_within = []
+
+    def set_behind_cards(self):
+        for card in self.cards_within:
+            card.sprite.set_texture(1)
 
 
