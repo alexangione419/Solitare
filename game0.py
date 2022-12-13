@@ -68,7 +68,6 @@ class Game(arcade.Window):
 
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):  
-        print(x, y) 
         """ is activated whenever the user presses on the game board with their mouse
 
         Args:
@@ -182,18 +181,12 @@ class Game(arcade.Window):
                 return self.draw_slot
             else:
                 if x >= 940 and x < 1190:
-                    print("fuck1")
-
                     return self.win_slot_1
                 elif x > 1191 and x < 1450:
-                    print("fuck2")
-
                     return self.win_slot_2
                 elif x > 1451 and x < 1691:
-                    print("fuck3")
                     return self.win_slot_3
                 elif x > 1691:
-                    print("fuck")
                     return self.win_slot_4
                 else:
                     return 0

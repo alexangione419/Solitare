@@ -34,16 +34,16 @@ class playSlot(GameSlot):
         Args:
             card (Card): the card to be added to the slot
         """
-        
-
+    
         if self.front_card == 0 and card.value == 'K':
             card.centerx = self.x_pos
             card.centery = self.y_pos
             card.sprite.center_x = self.x_pos
             card.sprite.center_y = self.y_pos
 
+            prev_front = self.front_card
             self.front_card = card
-            self.cards_within.append(card)
+            self.cards_within.append(prev_front)
 
         elif (self.ref_vals.index(card.value) == self.ref_vals.index(self.front_card.value) - 1) and (card.suit.color != self.front_card.suit.color):
             card.centerx = self.front_card.centerx + 0.001
@@ -51,8 +51,9 @@ class playSlot(GameSlot):
             card.sprite.center_x = self.front_card.centerx + 0.001
             card.sprite.center_y = self.front_card.centery - 40
             
+            prev_front = self.front_card
             self.front_card = card
-            self.cards_within.append(card)
+            self.cards_within.append(prev_front)
 
     def remove_front(self):
         """method that removes the front card from a particular slot and adjusts the slot accordingly

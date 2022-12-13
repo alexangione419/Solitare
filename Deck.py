@@ -69,7 +69,7 @@ class Deck:
             y (int): y position to check
 
         Returns:
-            _type_: _description_
+            Card: desired Card
         """
         for card in self.deck:
             if card.centerx == x and card.centery == y:
