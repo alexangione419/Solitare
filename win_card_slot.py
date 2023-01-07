@@ -54,4 +54,7 @@ class winSlot(GameSlot):
         else:
             self.front_card = 0
             self.cards_within = []
+
+    def is_front_card(self, card : Card):
+        return self.front_card == card
     

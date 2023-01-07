@@ -73,3 +73,5 @@ class drawSlot(GameSlot):
             boolean: always false
         """
         return False
+
+    

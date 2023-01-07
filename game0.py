@@ -52,7 +52,8 @@ class Game(arcade.Window):
             # the second tuple will be the original x and y
             # the third will be the card object
             # the fourth item will be the cards current slot
-        self.held_card = [0, (0, 0), 0, 0]
+            # the fifth item will be a list of tuples? maybe? of the cards beneath card and sprite
+        self.held_card = [0, (0, 0), 0, 0, []]
         self.background = arcade.load_texture("background.png")
 
     def on_draw(self):
@@ -102,16 +103,23 @@ class Game(arcade.Window):
             
         # begins the process of moving the card selected by the player, chooses the frontmost card the player clicks on
         elif len(on_sprites) > 0:  
-            self.all_sprites.remove(self.button)
-            self.held_card[0] = on_sprites[-1]
-            self.held_card[1] = (self.held_card[0].center_x, self.held_card[0].center_y)
-            self.held_card[2] = self.playableDeck.get_card(self.held_card[0].center_x, self.held_card[0].center_y)
-            self.held_card[3] = self.get_slot(self.all_play_slots, x, y, 0, 6)
+            current_slot = self.get_slot(self.all_play_slots, x, y, 0, 6)
+            current_card = self.playableDeck.get_card(on_sprites[-1].center_x, on_sprites[-1].center_y)
+            print(current_card.value)
+            print(current_slot.front_card.value)
 
-            # brings the sprite to the back of the sprite list to place it on top of the others
-            self.all_sprites.remove(self.held_card[0])
-            self.all_sprites.append(self.button)
-            self.all_sprites.append(self.held_card[0])
+
+            if(current_slot == drawSlot or current_slot.is_front_card(current_card)):
+                self.all_sprites.remove(self.button)
+                self.held_card[0] = on_sprites[-1]
+                self.held_card[1] = (self.held_card[0].center_x, self.held_card[0].center_y)
+                self.held_card[2] = self.playableDeck.get_card(self.held_card[1][0], self.held_card[1][1])
+                self.held_card[3] = current_slot
+
+                # brings the sprite to the back of the sprite list to place it on top of the others
+                self.all_sprites.remove(self.held_card[0])
+                self.all_sprites.append(self.button)
+                self.all_sprites.append(self.held_card[0])
 
     
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):

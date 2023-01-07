@@ -73,4 +73,8 @@ class playSlot(GameSlot):
         for card in self.cards_within:
             card.sprite.set_texture(1)
 
+    def is_front_card(self, card : Card):
+        return self.front_card == card
+
+
 
